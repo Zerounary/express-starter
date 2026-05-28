@@ -7,9 +7,9 @@
     "start": "node src/index.js",
     "dev": "node src/index.js",
     "build": "cd front-end && npm run build",
-    "pkg": "npm run build && xcopy /E /I /Y front-end\\dist dist\\front-end\\dist && xcopy /E /I /Y node_modules\\sqlite3\\build\\Release dist\\node_modules\\sqlite3\\build\\Release && pkg . --targets node18-win-x64 --output dist/quick-dist.exe",
-    "pkg:linux": "npm run build && cp -r front-end/dist dist/front-end/dist && cp -r node_modules/sqlite3/build/Release dist/node_modules/sqlite3/build/Release && pkg . --targets node18-linux-x64 --output dist/quick-dist",
-    "pkg:mac": "npm run build && cp -r front-end/dist dist/front-end/dist && cp -r node_modules/sqlite3/build/Release dist/node_modules/sqlite3/build/Release && pkg . --targets node18-macos-x64 --output dist/quick-dist"
+    "pkg": "npm run build && xcopy /E /I /Y front-end\\dist dist\\front-end\\dist && xcopy /E /I /Y node_modules\\sqlite3\\build\\Release dist\\node_modules\\sqlite3\\build\\Release && pkg . --targets node18-win-x64 --output dist/quick-dist.exe && node scripts/create-dist-zip.js",
+    "pkg:linux": "npm run build && cp -r front-end/dist dist/front-end/dist && cp -r node_modules/sqlite3/build/Release dist/node_modules/sqlite3/build/Release && pkg . --targets node18-linux-x64 --output dist/quick-dist && node scripts/create-dist-zip.js",
+    "pkg:mac": "npm run build && cp -r front-end/dist dist/front-end/dist && cp -r node_modules/sqlite3/build/Release dist/node_modules/sqlite3/build/Release && pkg . --targets node18-macos-x64 --output dist/quick-dist && node scripts/create-dist-zip.js"
   },
   "pkg": {
     "assets": [
@@ -32,6 +32,7 @@
     "sqlite3": "^6.0.1"
   },
   "devDependencies": {
-    "pkg": "^5.8.1"
+    "pkg": "^5.8.1",
+    "adm-zip": "^0.5.10"
   }
 }
