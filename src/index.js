@@ -1,6 +1,23 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+
+// Fix sqlite3 bindings for pkg
+if (typeof process.pkg !== 'undefined') {
+  const bindingsPath = path.join(path.dirname(process.execPath), 'node_modules/sqlite3/build/Release/node_sqlite3.node');
+  const fs = require('fs');
+  if (fs.existsSync(bindingsPath)) {
+    const bindings = require('bindings');
+    const originalResolve = bindings.resolve;
+    bindings.resolve = function (opts) {
+      if (opts.name === 'sqlite3') {
+        return bindingsPath;
+      }
+      return originalResolve.call(this, opts);
+    };
+  }
+}
+
 const { sequelize, User } = require('./models');
 const bcrypt = require('bcryptjs');
 
