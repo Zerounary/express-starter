@@ -1,0 +1,36 @@
+{
+  "name": "quick-dist-backend",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "bin": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js",
+    "build": "cd front-end && npm run build",
+    "pkg": "npm run build && xcopy /E /I /Y front-end\\dist dist\\front-end\\dist && pkg . --targets node18-win-x64 --output dist/quick-dist.exe",
+    "pkg:linux": "npm run build && cp -r front-end/dist dist/front-end/dist && pkg . --targets node18-linux-x64 --output dist/quick-dist",
+    "pkg:mac": "npm run build && cp -r front-end/dist dist/front-end/dist && pkg . --targets node18-macos-x64 --output dist/quick-dist"
+  },
+  "pkg": {
+    "assets": [
+      "front-end/dist/**/*"
+    ],
+    "outputPath": "dist",
+    "scripts": [
+      "src/**/*.js"
+    ]
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "init": "^0.1.2",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.1.1",
+    "sequelize": "^6.37.8",
+    "sqlite3": "^6.0.1"
+  },
+  "devDependencies": {
+    "pkg": "^5.8.1"
+  }
+}

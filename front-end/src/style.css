@@ -1,0 +1,130 @@
+:root {
+  --el-color-primary: #6366f1;
+  --el-color-primary-light-3: #818cf8;
+  --el-color-primary-light-5: #a5b4fc;
+  --el-color-primary-light-7: #c7d2fe;
+  --el-color-primary-light-9: #eef2ff;
+  --el-color-primary-dark-2: #4f46e5;
+  --el-border-radius-base: 8px;
+  --el-border-radius-small: 6px;
+  --text: #1e293b;
+  --muted: #64748b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+/* Element Plus refinements */
+.el-table {
+  --el-table-border-color: #f1f5f9;
+  --el-table-header-bg-color: #fafbfc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.el-table th.el-table__cell {
+  font-weight: 600;
+  font-size: 13px;
+  color: #475569;
+}
+
+.el-dialog {
+  border-radius: 16px !important;
+}
+
+.el-dialog__header {
+  padding: 20px 24px 12px;
+}
+
+.el-dialog__body {
+  padding: 12px 24px 20px;
+}
+
+.el-tag {
+  border-radius: 6px;
+}
+
+.el-button.btn-gradient {
+  background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
+  border: none;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+.el-button.btn-gradient:hover {
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.el-pagination.is-background .el-pager li.is-active {
+  background: #6366f1;
+}
+
+/* Date range picker width fix */
+.el-date-editor.el-range-editor {
+  width: 260px !important;
+  flex-shrink: 0;
+}
+@media (max-width: 767px) {
+  .el-date-editor.el-range-editor {
+    width: 220px !important;
+  }
+}
+
+/* Responsive tables — horizontal scroll on small screens */
+.el-table {
+  width: 100%;
+}
+
+/* Dialogs — larger on PC, full-width on mobile */
+@media (min-width: 768px) {
+  .el-dialog {
+    margin-top: 6vh !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .el-dialog {
+    --el-dialog-width: 94% !important;
+    width: 94% !important;
+    margin: 12px auto !important;
+    border-radius: 12px !important;
+  }
+  .el-dialog__body {
+    max-height: 65vh;
+    overflow-y: auto;
+  }
+  .page-container {
+    padding: 12px !important;
+  }
+  .page-title {
+    font-size: 17px !important;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
