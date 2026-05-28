@@ -130,3 +130,36 @@ Authorization: Bearer <token>
 ```
 
 公开答题接口使用活动 token 进行认证。
+
+## 打包部署
+
+### Windows 打包
+
+```bash
+npm run pkg
+```
+
+打包完成后会生成：
+- `dist/quick-dist.exe` - 可执行文件
+- `dist.zip` - 完整部署包（包含可执行文件和前端资源）
+
+### Linux 打包
+
+```bash
+npm run pkg:linux
+```
+
+### macOS 打包
+
+```bash
+npm run pkg:mac
+```
+
+### 部署说明
+
+1. 将 `dist.zip` 解压到目标服务器
+2. 直接运行 `quick-dist.exe`（Windows）或 `quick-dist`（Linux/Mac）
+3. 服务默认运行在 3000 端口
+4. 首次运行会自动创建数据库文件和默认管理员账号
+
+**注意：** 打包后的可执行文件会自动包含 sqlite3 原生依赖，无需额外安装。
