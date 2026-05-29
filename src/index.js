@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const logger = require('./config/logger');
 
 // Fix sqlite3 bindings for pkg
 if (typeof process.pkg !== 'undefined') {
@@ -46,7 +47,12 @@ app.use(express.static(distPath));
 
 // Request logging
 app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  logger.info(`${req.method} ${req.path}`, {
+    method: req.method,
+    path: req.path,
+    ip: req.ip,
+    userAgent: req.get('user-agent')
+  });
   next();
 });
 
@@ -74,7 +80,12 @@ app.use((req, res) => {
 
 // Error handler
 app.use((err, req, res, next) => {
-  console.error('Error:', err);
+  logger.error('Server error', {
+    error: err.message,
+    stack: err.stack,
+    path: req.path,
+    method: req.method
+  });
   res.status(500).json({ code: 500, error: '服务器内部错误' });
 });
 
@@ -83,7 +94,7 @@ async function initializeServer() {
   try {
     // Sync database
     await sequelize.sync();
-    console.log('数据库同步完成');
+    logger.info('数据库同步完成');
 
     // Create default admin user if not exists
     const adminCount = await User.count({ where: { username: 'admin' } });
@@ -95,25 +106,25 @@ async function initializeServer() {
         realName: '管理员',
         role: 'admin',
       });
-      console.log('默认管理员用户已创建 (用户名: admin, 密码: root123)');
+      logger.info('默认管理员用户已创建 (用户名: admin, 密码: root123)');
     }
 
     // Start server
     const server = app.listen(PORT, () => {
-      console.log(`服务器运行在 http://localhost:${PORT}`);
-      console.log(`健康检查: http://localhost:${PORT}/health`);
+      logger.info(`服务器运行在 http://localhost:${PORT}`);
+      logger.info(`健康检查: http://localhost:${PORT}/health`);
     });
 
     // Keep process alive
     process.on('SIGINT', () => {
-      console.log('\n正在关闭服务器...');
+      logger.info('正在关闭服务器...');
       server.close(() => {
-        console.log('服务器已关闭');
+        logger.info('服务器已关闭');
         process.exit(0);
       });
     });
   } catch (error) {
-    console.error('服务器初始化失败:', error);
+    logger.error('服务器初始化失败', { error: error.message, stack: error.stack });
     process.exit(1);
   }
 }
